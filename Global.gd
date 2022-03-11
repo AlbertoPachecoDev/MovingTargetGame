@@ -26,6 +26,7 @@ func _ready():
 	Rnd.randomize()
 	TargetWidth = TargetImage.get_width()
 	Cols = range(TargetWidth, ScreenW, TargetWidth) # generate cols array
+	Cols.remove(Cols.size()/2) # remove middle column
 	z_index = 1
 	set_process(true)
 

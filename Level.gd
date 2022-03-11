@@ -19,8 +19,8 @@ func _ready():
 		var img = obj.get_node("sprite")
 		obj.id = i
 		img.set_texture(Global.TargetImage)
-		img.set_scale(Vector2(0.8, 0.8))
-		img.set_position(Vector2(cols.pop_back(), Global.TargetWidth/2))
+		# img.set_scale(Vector2(0.8, 0.8))
+		img.set_position(Vector2(cols.pop_back(), Global.TargetWidth)) #Global.TargetWidth/2))
 		targets.append(i) # contador targets
 		add_child(obj)
 		obj.connect("kill", self, "kill_target") # receive signal

@@ -1,6 +1,6 @@
-# MovingTargetGame
+# Moving Target Game
 
-## Godot 2D Archery Shooting Game
+## Godot Archery Shooting 2D Game
 
 
 Game Platforms, Alberto Pacheco, 2022

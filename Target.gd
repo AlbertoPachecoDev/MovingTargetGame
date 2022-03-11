@@ -10,7 +10,7 @@ var speed
 onready var floorY = Global.ScreenH - Global.TargetWidth
 
 func _ready():
-	var y = Global.Rnd.randf_range(80.0, 160.0) # falling spped
+	var y = Global.Rnd.randf_range(24.0, 48.0 - 2*Global.Level) # falling spped
 	speed = Vector2(0, y) # set speed
 	set_process(true)
 
