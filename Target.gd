@@ -2,6 +2,8 @@
 
 extends Node2D
 
+signal kill(id)
+
 var id
 var speed
 
@@ -18,4 +20,4 @@ func _process(delta):
 		set_position(pos + speed * delta) # move
 	else: # on the floor?
 		queue_free()  # ISSUE: Evitar click en objeto en el suelo
-		
+		emit_signal("kill", id)

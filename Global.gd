@@ -1,5 +1,11 @@
 # Global.gd
 
+# Backgrounds
+# https://www.flickr.com/photos/29638108@N06/51690240835/in/dateposted/
+# Credits: Jennifer C. www.metaphoricalplatypus.com
+
+# Bow & Arrow @sammo241 (2012): https://openclipart.org/detail/171957/bow-and-arrow
+
 extends Node2D
 
 const TargetImage = preload("res://images/target.png")
@@ -24,8 +30,7 @@ func _ready():
 	set_process(true)
 
 func _process(_delta):
-	$scoreLabel.text = "Level: " + String(Level) + "  Score: " + String(Score) # SOL: Tarea-1: update score
-	# EQUIV: get_node("scoreLabel").set_text("Score: " + String(Score)) 
+	$scoreLabel.text = "Level: " + String(Level) + "  Score: " + String(Score) 
 
 func game_over():
 	$scoreLabel.set_text("GAME OVER!  Score = "+String(Score))
