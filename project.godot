@@ -22,6 +22,11 @@ Global="*res://Global.tscn"
 
 icon=false
 
+[layer_names]
+
+2d_physics/layer_1="target"
+2d_physics/layer_2="arrow"
+
 [physics]
 
 common/enable_pause_aware_picking=true

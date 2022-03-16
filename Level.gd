@@ -7,27 +7,23 @@ extends Node2D
 
 const target = preload("res://Target.tscn")
 
-var targets # target-ids array
+onready var targets = [] # target-ids array
 
 func _ready():
-	targets = [] # ids
 	var cols = Global.Cols.duplicate() # copy array
 	randomize()
 	cols.shuffle() # random order
 	for i in range(Global.Level): # create targets
 		var obj = target.instance()
-		var img = obj.get_node("sprite")
 		obj.id = i
-		img.set_texture(Global.TargetImage)
-		# img.set_scale(Vector2(0.8, 0.8))
-		img.set_position(Vector2(cols.pop_back(), Global.TargetWidth)) #Global.TargetWidth/2))
+		obj.set_position(Vector2(cols.pop_back(), Global.TargetWidth))
 		targets.append(i) # contador targets
+		obj.connect("target_signal", self, "update_targets") # target signal
 		add_child(obj)
-		obj.connect("kill", self, "kill_target") # receive signal
 
-func kill_target(id):
+func update_targets(id):
 	targets.erase(id) # remove target
-	if targets.empty(): # next level?
+	if targets.empty(): # no more targets? go next level
 		if Global.Level < Global.Cols.size(): # more levels?
 			Global.Level += 1
 			# warning-ignore:return_value_discarded
@@ -35,5 +31,3 @@ func kill_target(id):
 		else: # game over!
 			Global.game_over()
 			get_tree().paused = true
-
-	

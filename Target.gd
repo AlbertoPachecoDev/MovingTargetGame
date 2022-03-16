@@ -1,23 +1,30 @@
 # Target.gd
 
-extends Node2D
+# Falling Particles: https://www.youtube.com/watch?v=lmzjiMh6LLs
 
-signal kill(id)
+extends Area2D
+
+signal target_signal(id)
+
+const MIN_SPEED = 20.0
+const MAX_SPEED = 50.0
 
 var id
 var speed
 
-onready var floorY = Global.ScreenH - Global.TargetWidth
-
 func _ready():
-	var y = Global.Rnd.randf_range(24.0, 48.0 - 2*Global.Level) # falling spped
-	speed = Vector2(0, y) # set speed
+	speed = Vector2(0, Global.Rnd.randf_range(MIN_SPEED, MAX_SPEED - 2 * Global.Level)) # falling speed
 	set_process(true)
 
 func _process(delta):
-	var pos = get_position()
-	if pos.y < floorY: # falling?
-		set_position(pos + speed * delta) # move
-	else: # on the floor?
-		queue_free()  # ISSUE: Evitar click en objeto en el suelo
-		emit_signal("kill", id)
+	position += speed * delta
+
+func end():
+	emit_signal("target_signal", id)
+	queue_free()
+
+func _on_VisibilityNotifier2D_screen_exited():
+	end()
+
+func _on_Target_area_entered(_area):
+	end()

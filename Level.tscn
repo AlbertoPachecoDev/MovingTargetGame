@@ -1,38 +1,27 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Level.gd" type="Script" id=1]
 [ext_resource path="res://images/forest1.jpg" type="Texture" id=2]
-[ext_resource path="res://images/bow.png" type="Texture" id=3]
-[ext_resource path="res://images/arrow.png" type="Texture" id=4]
+[ext_resource path="res://arrow.tscn" type="PackedScene" id=3]
+[ext_resource path="res://player.gd" type="Script" id=4]
+[ext_resource path="res://bow.tscn" type="PackedScene" id=5]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="sky" type="ColorRect" parent="."]
-visible = false
-margin_right = 1024.0
-margin_bottom = 600.0
-color = Color( 0.419608, 0.784314, 0.945098, 1 )
-
-[node name="floor" type="ColorRect" parent="."]
-visible = false
-margin_top = 560.0
-margin_right = 1024.0
-margin_bottom = 600.0
-color = Color( 0.168627, 0.435294, 0.0745098, 1 )
-
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="fondo" type="TextureRect" parent="."]
 margin_right = 2048.0
 margin_bottom = 1536.0
 rect_scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 
-[node name="arco" type="Sprite" parent="."]
-position = Vector2( 512, 560 )
-rotation = -1.5708
-texture = ExtResource( 3 )
-
-[node name="flecha" type="Sprite" parent="."]
+[node name="player" type="Node2D" parent="."]
 position = Vector2( 512, 550 )
+script = ExtResource( 4 )
+
+[node name="bow" parent="player" instance=ExtResource( 5 )]
 rotation = -1.5708
-texture = ExtResource( 4 )
+
+[node name="arrow" parent="player" instance=ExtResource( 3 )]
+position = Vector2( 0, -20 )
+rotation = -1.5708
