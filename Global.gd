@@ -16,8 +16,10 @@ onready var Level = 1
 var Rnd
 var ScreenW
 var ScreenH
-var Cols # array
 var TargetWidth
+
+var Cols # array
+var Angle = 0 # Store bow angle
 
 func _ready():
 	ScreenW = get_viewport().size.x # screen size

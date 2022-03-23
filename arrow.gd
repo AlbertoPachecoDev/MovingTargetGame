@@ -4,6 +4,7 @@ extends Area2D
 
 signal arrow_fired()
 signal arrow_out()
+signal arrow_sound()
 
 const MAX_FORCE = 18
 const MAX_SPEED = -260
@@ -19,7 +20,7 @@ func _process(delta):
 	position.y += speed * delta
 
 func reset():
-	emit_signal("arrow_out")
+	emit_signal("arrow_out") # sale flecha pantalla o si dio en el target
 	set_process(false)
 	shoot = false
 	position = Vector2(0,-10)
@@ -41,4 +42,8 @@ func _on_VisibilityNotifier2D_screen_exited(): # out-of-screen
 
 func _on_arrow_area_entered(_area):
 	Global.Score += 100
+	$hit.play()
 	reset()
+
+func _on_hit_finished():
+	emit_signal("arrow_sound")

@@ -10,6 +10,9 @@ const target = preload("res://Target.tscn")
 onready var targets = [] # target-ids array
 
 func _ready():
+	# warning-ignore:return_value_discarded
+	$player/arrow.connect("arrow_sound", self, "next")
+	$player.global_rotation_degrees = Global.Angle # Restore last bow-angle
 	var cols = Global.Cols.duplicate() # copy array
 	randomize()
 	cols.shuffle() # random order
@@ -23,7 +26,13 @@ func _ready():
 
 func update_targets(id):
 	targets.erase(id) # remove target
+	if targets.empty():
+		next()
+
+func next():
 	if targets.empty(): # no more targets? go next level
+		yield(get_tree().create_timer(0.25), "timeout") # pause for end-arrow-sound
+		Global.Angle = $player.global_rotation_degrees  # store last bow-angle
 		if Global.Level < Global.Cols.size(): # more levels?
 			Global.Level += 1
 			# warning-ignore:return_value_discarded

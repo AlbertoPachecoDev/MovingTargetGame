@@ -27,4 +27,4 @@ func _on_VisibilityNotifier2D_screen_exited():
 	end()
 
 func _on_Target_area_entered(_area):
-	end()
+	end() # collision
