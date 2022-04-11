@@ -8,9 +8,8 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 6, 16 )
 
-[node name="arrow" type="Area2D"]
+[node name="arrow" type="KinematicBody2D"]
 collision_layer = 2
-input_pickable = false
 script = ExtResource( 3 )
 
 [node name="sprite" type="Sprite" parent="."]
@@ -39,6 +38,5 @@ position = Vector2( 38, 1 )
 scale = Vector2( 1, 0.75 )
 rect = Rect2( -10, -10, 16, 17 )
 
-[connection signal="area_entered" from="." to="." method="_on_arrow_area_entered"]
 [connection signal="finished" from="hit" to="." method="_on_hit_finished"]
 [connection signal="screen_exited" from="exit_screen" to="." method="_on_VisibilityNotifier2D_screen_exited"]

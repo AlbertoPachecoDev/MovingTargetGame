@@ -6,9 +6,9 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 27.0185
 
-[node name="Target" type="Area2D"]
+[node name="Target" type="RigidBody2D"]
 collision_mask = 2
-input_pickable = false
+gravity_scale = 0.25
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -22,5 +22,7 @@ shape = SubResource( 1 )
 
 [node name="exit_screen" type="VisibilityNotifier2D" parent="."]
 
-[connection signal="area_entered" from="." to="." method="_on_Target_area_entered"]
+[node name="efecto" type="Tween" parent="."]
+
 [connection signal="screen_exited" from="exit_screen" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="tween_completed" from="efecto" to="." method="_on_efecto_tween_completed"]
