@@ -1,49 +1,48 @@
 # arrow.gd
 
-extends KinematicBody2D
+extends RigidBody2D
 
-signal arrow_fired()
+#signal arrow_fired()
 signal arrow_out()
 signal arrow_sound()
 
 const MAX_FORCE = 18
 const MAX_SPEED = -260
+const Y0 = -10
+const ARROW_POS0 = Vector2(0,Y0)
 
 onready var max_y = position.y + MAX_FORCE
-onready var shoot = false
-var speed
+#onready var shoot = false
+# var speed
 
 func _ready():
-	pass
-	#set_process(false)
-	#gravity_scale = 0.0 # remove gravity force!
+	gravity_scale = 0.0 # remove gravity force!
+	print(max_y)
+	
+# Physics
+func impulse():
+	var posy = position.y
+	var force = range_lerp(posy, Y0, max_y, 10, 100) #
+	var impulse =  -force * (position - ARROW_POS0) # todo: considerar angulo
+	print("posy=", posy, " force=", force, " impulse=", impulse)
+	self.apply_central_impulse(impulse) # aplicar fuerza para mover flecha
+	$shoot.play()
 
-#func _process(delta):
-#	position.y += speed * delta # Can't set position!!
-
-func _physics_process(delta):
-	if shoot:
-		var movement = speed * delta
-		if move_and_collide(movement):
-			print("chocaron!")
+#func _physics_process(delta):
+#	if shoot:
+#		var movement = speed * delta
+#		if move_and_collide(movement):
+#			print("chocaron!")
 
 func reset():
 	emit_signal("arrow_out") # sale flecha pantalla o si dio en el target
-	set_process(false)
-	shoot = false
-	position = Vector2(0,-10)
+	#shoot = false
+	position = ARROW_POS0
 
-func _input(_event):
-	if shoot: return
-	if Input.is_action_just_released("ui_select"):
-		speed = Vector2(300,MAX_SPEED * sqrt(MAX_FORCE-(max_y-position.y)+1))
-		shoot = true
-		emit_signal("arrow_fired")
-		#set_process(true)
-		$shoot.play()
-	elif Input.is_action_pressed("ui_select"):
-		if position.y <= max_y:
-			position.y += 2
+func change_pos():
+	if position.y <= max_y:
+		position.y += 2
+
 
 func _on_VisibilityNotifier2D_screen_exited(): # out-of-screen
 	reset()

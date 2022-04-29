@@ -14,23 +14,20 @@ var speed
 
 func _ready():
 	var tam = $sprite.get_scale()
-	speed = Vector2(0, Global.Rnd.randf_range(MIN_SPEED, MAX_SPEED - 2 * Global.Level)) # falling speed
-	#set_process(true)
+	var vel_y = Global.Rnd.randf_range(MIN_SPEED, MAX_SPEED - 2 * Global.Level)
+	speed = Vector2(0, vel_y) # falling speed
 	$efecto.interpolate_property($sprite, 'scale', tam, 1.25 * tam, 0.3, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
 	$efecto.interpolate_property($sprite, 'modulate:a', 1, 0, 0.4, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 
-#func _process(delta):
-#	position += speed * delta
-
 func end():
 	$efecto.start()
-	emit_signal("target_signal", id)
+	emit_signal("target_signal", id) # notify arrow hit target
 	
-func _on_VisibilityNotifier2D_screen_exited():
+func _on_VisibilityNotifier2D_screen_exited(): # out-of-screen (bottom)
 	end()
 
-func _on_Target_area_entered(_area):
-	end() # collision
+func _on_Target_area_entered(_area): # collision
+	end() 
 
-func _on_efecto_tween_completed(_object, _key):
+func _on_efecto_tween_completed(_object, _key): # wait end-tween-effect
 	queue_free()

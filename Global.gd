@@ -21,6 +21,7 @@ var TargetWidth
 var Cols # array
 var Angle = 0 # Store bow angle
 
+
 func _ready():
 	ScreenW = get_viewport().size.x # screen size
 	ScreenH = get_viewport().size.y
@@ -30,7 +31,7 @@ func _ready():
 	Cols = range(TargetWidth, ScreenW, TargetWidth) # generate cols array
 	for _n in 3: # remove 3 middle columns
 		Cols.remove(int(Cols.size()/2))
-	z_index = 1
+	z_index = 1 # float over main view
 	set_process(true)
 
 func _process(_delta):

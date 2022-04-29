@@ -26,10 +26,10 @@ func _ready():
 
 func update_targets(id):
 	targets.erase(id) # remove target
-	if targets.empty():
-		next()
+	if targets.empty(): # no-more targets?
+		next() # go next-level
 
-func next():
+func next(): # next-level?
 	if targets.empty(): # no more targets? go next level
 		yield(get_tree().create_timer(0.25), "timeout") # pause for end-arrow-sound
 		Global.Angle = $player.global_rotation_degrees  # store last bow-angle
@@ -39,4 +39,5 @@ func next():
 			get_tree().reload_current_scene() # restart
 		else: # game over!
 			Global.game_over()
-			get_tree().paused = true
+			# get_tree().paused = true # pause-game
+			get_tree().quit() # close-game
