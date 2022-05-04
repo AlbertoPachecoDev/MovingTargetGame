@@ -24,8 +24,10 @@ func _input(event):
 	if keys_disabled: return
 	if Input.is_action_pressed("ui_right") and rotation_degrees <= RMax:
 		rotate(RBig if event.shift else RSmall) # shift-key is faster
+		Global.Angle = global_rotation # BUG
 	elif Input.is_action_pressed("ui_left") and rotation_degrees >= LMax:
 		rotate(LBig if event.shift else LSmall)
+		Global.Angle = global_rotation # BUG
 	elif Input.is_action_just_released("ui_select"):
 		$arrow.impulse() # Phy: shot arrow
 		keys_disabled = true

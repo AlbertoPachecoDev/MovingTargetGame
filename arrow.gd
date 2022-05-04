@@ -6,25 +6,27 @@ extends RigidBody2D
 signal arrow_out()
 signal arrow_sound()
 
-const MAX_FORCE = 18
-const MAX_SPEED = -260
-const Y0 = -10
+const FORCE = -50
+const Y0 = -20
+const MAX_Y = -4
 const ARROW_POS0 = Vector2(0,Y0)
-
-onready var max_y = position.y + MAX_FORCE
-#onready var shoot = false
-# var speed
+const OFF_ANG = deg2rad(90)
 
 func _ready():
 	gravity_scale = 0.0 # remove gravity force!
-	print(max_y)
+	print("posy=", position.y) 
 	
 # Physics
+# Tarea: 
+# 1. Evitar que siga disparando flechas
+# 2. Colisionar targets!!
 func impulse():
 	var posy = position.y
-	var force = range_lerp(posy, Y0, max_y, 10, 100) #
-	var impulse =  -force * (position - ARROW_POS0) # todo: considerar angulo
-	print("posy=", posy, " force=", force, " impulse=", impulse)
+	var desp = Y0 - posy - 1
+	var force = FORCE * desp
+	# https://docs.godotengine.org/en/stable/tutorials/2d/2d_movement.html#rotation-movement
+	var impulse = Vector2(force, 0).rotated(Global.Angle - OFF_ANG)
+	# print("desp=", desp, " posy=", posy, " force=", force, " impulse=", impulse)
 	self.apply_central_impulse(impulse) # aplicar fuerza para mover flecha
 	$shoot.play()
 
@@ -40,7 +42,7 @@ func reset():
 	position = ARROW_POS0
 
 func change_pos():
-	if position.y <= max_y:
+	if position.y < MAX_Y:
 		position.y += 2
 
 
