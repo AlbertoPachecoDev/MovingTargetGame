@@ -1,15 +1,22 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://images/arrow.png" type="Texture" id=1]
 [ext_resource path="res://audios/arrow.wav" type="AudioStream" id=2]
 [ext_resource path="res://arrow.gd" type="Script" id=3]
 [ext_resource path="res://audios/sound_hit.wav" type="AudioStream" id=4]
 
+[sub_resource type="PhysicsMaterial" id=2]
+absorbent = true
+
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 6, 16 )
+extents = Vector2( 4, 34 )
 
 [node name="arrow" type="RigidBody2D"]
+rotation = -1.5708
 collision_layer = 2
+physics_material_override = SubResource( 2 )
+contacts_reported = 1
+contact_monitor = true
 script = ExtResource( 3 )
 
 [node name="sprite" type="Sprite" parent="."]
@@ -25,10 +32,9 @@ stream = ExtResource( 2 )
 stream = ExtResource( 4 )
 
 [node name="impact" type="CollisionShape2D" parent="."]
-position = Vector2( 28, 0 )
+position = Vector2( 10, 6.51598e-05 )
 rotation = -1.5708
 shape = SubResource( 1 )
-one_way_collision = true
 __meta__ = {
 "_edit_group_": true
 }
@@ -38,5 +44,6 @@ position = Vector2( 38, 1 )
 scale = Vector2( 1, 0.75 )
 rect = Rect2( -10, -10, 16, 17 )
 
+[connection signal="body_entered" from="." to="." method="_on_arrow_body_entered"]
 [connection signal="finished" from="hit" to="." method="_on_hit_finished"]
-[connection signal="screen_exited" from="exit_screen" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="screen_exited" from="exit_screen" to="." method="_on_exit_screen_screen_exited"]
