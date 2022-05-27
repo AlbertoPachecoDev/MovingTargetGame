@@ -22,6 +22,8 @@ Versión 2.0
   5. Programa (GDScript)
   6. [Video del juego](https://www.youtube.com/watch?v=D71isvVNFsQ)
 
+![Pantalla del juego](https://godotengine.org/themes/godotengine/assets/features/2dgames.jpg)
+
 ## Resultados
 
 ## Conclusiones
